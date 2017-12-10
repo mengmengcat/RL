@@ -9,12 +9,17 @@ import numpy as np
 
 class DeepQNetwork:
 
-    #初始化参数
-    def  __init__(self,gamme,learning_rate):
+    # initialize hyperparameter
+    def  __init__(self,gamme,learning_rate,n_features,n_actions,n_layers):
         self.gamme = gamme
         self.lr = learning_rate
+        self.n_features = n_features
+        self.n_actions = n_actions
+        self.n_layers = n_layers
+        self.sess = tf.Session()
+        self.sess.run(tf.global_variables_initializer())
 
-    #Q值计算网络
+    #compute the Q values
     def q_eval_net(self):
         self.s = tf.placeholder(tf.float32,[],name='s')
         self.memory = ['eval_net_params',tf.GraphKeys.GLOBAL_VARIABLES]
@@ -43,7 +48,7 @@ class DeepQNetwork:
             w2 = tf.get_variable('w2', [], initializer=self.w_initializer, collections=self.memory)
             b2 = tf.get_variable('b2', [], initializer=self.b_initializer, collections=self.memory)
             self.q_next = tf.matmul(w2, l1) + b2
-    #action 位置匹配转换
+    #match the action position 
     def transform(self):
         q_eval_zero = np.zeros()
         q_next_zero = np.zeros()
