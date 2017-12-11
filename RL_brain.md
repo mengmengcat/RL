@@ -1,13 +1,6 @@
-# RL
-TO build a universal fundamental DQN network which can be used with every beginners 
-and this project is still updating~
-hope some one can join me!
-
-
-
-import tensorflow as tf
-import numpy as np
-class DeepQNetwork:
+    import tensorflow as tf
+    import numpy as np
+    class DeepQNetwork:
     #initialize parameter
     def  __init__(self,gamme,learning_rate,n_features,n_actions,n_layers,memory_size,batch_size):
         self.gamme = gamme
@@ -91,4 +84,21 @@ class DeepQNetwork:
         self.loss = tf.reduce_mean(tf.squared_difference(self.q_target, self.q_eval))
         self._train_op = tf.train.RMSPropOptimizer(self.lr).minimize(self.loss)
         self.loss_record.append(self.loss)
+
+    def plot_cost(self):
+        import matplotlib.pyplot as plt
+        plt.plot(np.arange(len(self.loss_record)), self.loss_record)
+        plt.ylabel('Cost')
+        plt.xlabel('training steps')
+        plt.show()
+
+
+
+
+
+
+
+
+
+
 
